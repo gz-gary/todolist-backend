@@ -1,8 +1,8 @@
-package com.example.todolist;
+package com.example.todolist.db;
 
-import com.example.todolist.db.ItemsDB;
 import com.example.todolist.model.Item;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Service
+@Primary
 public class MockItemsDB implements ItemsDB {
     private int lastId = 0;
     private List<Item> items = new LinkedList<>();

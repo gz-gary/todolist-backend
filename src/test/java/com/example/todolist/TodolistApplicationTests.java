@@ -1,9 +1,12 @@
 package com.example.todolist;
 
+import com.example.todolist.controller.ItemsController;
+import com.example.todolist.db.MockItemsDB;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -13,8 +16,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
+@WebMvcTest(controllers = ItemsController.class)
+@Import(MockItemsDB.class)
 class TodolistApplicationTests {
 	@Autowired
 	private MockMvc mockMvc;
@@ -34,7 +37,7 @@ class TodolistApplicationTests {
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(String.format("{\"title\": \"%s\"}", "A new item"))
 			)
-			.andExpect(status().isOk())
+			.andExpect(status().isCreated())
 			.andDo(result -> System.out.println(result.getResponse().getContentAsString()));
 
 		mockMvc.perform(
@@ -42,7 +45,7 @@ class TodolistApplicationTests {
 			.contentType(MediaType.APPLICATION_JSON)
 			.content(String.format("{\"title\": \"%s\"}", "Another item"))
 			)
-			.andExpect(status().isOk())
+			.andExpect(status().isCreated())
 			.andDo(result -> System.out.println(result.getResponse().getContentAsString()));
 
 		mockMvc.perform(get("/api/items"))
