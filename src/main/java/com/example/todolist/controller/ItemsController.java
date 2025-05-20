@@ -35,9 +35,12 @@ public class ItemsController {
     }
 
     @PostMapping
-    public Item createItem(@RequestBody Item item) {
+    public ResponseEntity<Item> createItem(@RequestBody Item item) {
         Item newItem = itemsDB.createItem(item.getTitle());
-        return newItem;
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .header("Location", "/api/items/" + newItem.getId())
+                .body(newItem);
     }
 
     @PatchMapping("/{id}")
