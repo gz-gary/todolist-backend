@@ -26,11 +26,10 @@ public class MockItemsDB implements ItemsDB {
     }
 
     @Override
-    public int createItem(String title) {
-        items.add(
-            new Item(lastId, LocalDateTime.now(), title, false)
-        );
-        return lastId++;
+    public Item createItem(String title) {
+        Item item = new Item(lastId++, LocalDateTime.now(), title, false);
+        items.add(item);
+        return item;
     }
 
     @Override

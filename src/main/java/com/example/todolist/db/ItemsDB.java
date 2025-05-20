@@ -7,6 +7,6 @@ import java.util.List;
 public interface ItemsDB {
     public List<Item> getItems();
     public Item getItemById(int id);
-    public int createItem(String title);
+    public Item createItem(String title);
     public boolean finishItem(int id, boolean finished);
 }
